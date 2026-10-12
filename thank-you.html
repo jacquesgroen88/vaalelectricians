@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Request received | Vaal Electricians</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{--baby:#FFB020;--baby-50:#FFFAF0;--baby-100:#FFF1D6;--deep:#B45309;--navy:#1A2433;--ink:#3A4352;--cta:#FFB020;--cta-ink:#2B1A00}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:linear-gradient(180deg,var(--baby-100),#fff);color:var(--ink);min-height:100vh;display:grid;place-items:center;padding:24px 16px;line-height:1.55}
+  .card{background:#fff;max-width:560px;width:100%;border-radius:22px;padding:36px 28px;box-shadow:0 10px 30px -12px rgba(26,36,51,.28);text-align:center}
+  .tick{width:72px;height:72px;border-radius:50%;background:var(--baby);display:grid;place-items:center;margin:0 auto 18px}
+  h1{color:var(--navy);font-size:1.8rem;margin:0 0 10px;letter-spacing:-.02em}
+  ol{text-align:left;padding-left:1.2em;margin:20px 0}
+  li{margin-bottom:8px}
+  .urgent{background:var(--baby-50);border-radius:14px;padding:16px;margin-top:18px;display:none}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--cta);color:var(--cta-ink);font-weight:800;text-decoration:none;padding:.9em 1.4em;border-radius:999px;margin-top:8px}
+  a{color:var(--deep)}
+</style>
+</head>
+<body>
+<div class="card">
+  <img src="/img/logo.png" alt="Vaal Electricians" width="865" height="120" style="height:30px;width:auto;margin:0 auto 22px;display:block">
+  <div class="tick"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1A2433" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+  <h1>Got it. An electrician will call you.</h1>
+  <p id="lead-line">We are passing your job to a local electrician now.</p>
+  <ol>
+    <li>Keep your phone nearby. The electrician will call from their own number.</li>
+    <li>They will ask a few questions and give you a quote before any work starts.</li>
+    <li>You decide. There is no obligation to accept.</li>
+  </ol>
+  <div class="urgent" id="urgent">
+    <strong>Emergency?</strong> Do not wait for the call back.<br>
+    <a class="btn js-call" href="tel:+27000000000">Call <span class="js-phone-display">000 000 0000</span></a>
+  </div>
+  <p style="margin-top:22px;font-size:.9rem"><a href="/">Back to Vaal Electricians</a></p>
+</div>
+<script>
+  // Keep in sync with CONFIG in index.html
+  const PHONE_DIAL = '+27000000000', PHONE_DISPLAY = '000 000 0000';
+  document.querySelectorAll('.js-call').forEach(a => a.href = 'tel:' + PHONE_DIAL);
+  document.querySelectorAll('.js-phone-display').forEach(e => e.textContent = PHONE_DISPLAY);
+  const qs = new URLSearchParams(location.search);
+  const names = { fault_tripping:'electrical fault', coc:'COC', solar_inverter:'solar and backup power', db_board:'DB board', lights_plugs:'electrical', other:'electrical' };
+  const job = names[qs.get('job')];
+  if (job) document.getElementById('lead-line').textContent = 'We are passing your ' + job + ' job to a local electrician now.';
+  if (['emergency_now','today'].includes(qs.get('urgency'))) document.getElementById('urgent').style.display = 'block';
+</script>
+</body>
+</html>
